@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PCValue : estime le prix de ton PC, calcule tes FPS et compare des configurations.">
+<title>PCValue — Combien vaut ton PC ?</title>
+<style>
+:root{--bg:#080b14;--panel:#111727;--panel2:#171e32;--line:#27304a;--text:#f5f7ff;--muted:#9aa5bf;--accent:#756cff;--accent2:#9b8cff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -10%,#20234d 0,#080b14 42%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+a{text-decoration:none;color:inherit}.wrap{max-width:1100px;margin:auto;padding:0 20px}
+nav{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff0b}
+.logo{font-size:23px;font-weight:950;letter-spacing:-1px}.logo span{color:var(--accent2)}
+.navlinks{display:flex;gap:22px;color:var(--muted);font-size:14px}.navlinks a:hover{color:white}
+.hero{text-align:center;padding:86px 0 55px}.pill{display:inline-block;padding:8px 12px;border:1px solid #ffffff16;border-radius:999px;background:#ffffff08;color:#b9b4ff;font-size:13px;font-weight:700}
+h1{font-size:clamp(44px,8vw,76px);line-height:.98;letter-spacing:-4px;margin:20px auto 20px;max-width:850px}
+.hero p{max-width:680px;margin:auto;color:var(--muted);font-size:18px;line-height:1.6}
+.btn{display:inline-block;margin-top:28px;background:var(--accent);padding:15px 22px;border-radius:13px;font-weight:850;box-shadow:0 10px 30px #756cff35}
+.section{padding:35px 0}.title{text-align:center;margin-bottom:24px}.title h2{font-size:32px;margin:0 0 8px}.title p{color:var(--muted);margin:0}
+.card{background:linear-gradient(145deg,#151c30,#0e1423);border:1px solid var(--line);border-radius:22px;padding:25px;box-shadow:0 20px 70px #0004}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}@media(max-width:700px){.grid{grid-template-columns:1fr}.navlinks{display:none}}
+label{display:block;color:var(--muted);font-size:13px;margin-bottom:7px}
+select,input{width:100%;background:#0a1020;color:white;border:1px solid #303953;border-radius:12px;padding:13px;font-size:15px;outline:none}
+select:focus,input:focus{border-color:var(--accent)}
+.full{grid-column:1/-1}.primary{width:100%;border:0;background:var(--accent);color:#fff;border-radius:13px;padding:15px;font-weight:900;font-size:16px;cursor:pointer}
+.result{display:none;margin-top:18px;padding:24px;border-radius:16px;background:#090f1d;border:1px solid #28314c;text-align:center}
+.price{font-size:52px;font-weight:950;letter-spacing:-2px}.range{color:var(--muted);margin-top:5px}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:17px}.smallbtn{border:1px solid #303953;background:#151d31;padding:10px 14px;border-radius:10px;font-weight:750;font-size:13px}
+.ad{height:105px;border:1px dashed #313b58;border-radius:15px;display:flex;align-items:center;justify-content:center;color:#59647d;font-size:12px;margin:28px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}@media(max-width:800px){.features{grid-template-columns:1fr}}
+.feature{padding:23px;border:1px solid var(--line);border-radius:17px;background:#111727}.icon{font-size:25px}.feature h3{margin:12px 0 7px}.feature p{color:var(--muted);line-height:1.5;margin:0;font-size:14px}
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}@media(max-width:800px){.products{grid-template-columns:1fr}}
+.product{background:#111727;border:1px solid var(--line);border-radius:17px;padding:20px}.product .tag{color:#aaa3ff;font-size:12px;font-weight:800}.product h3{margin:8px 0}.product p{color:var(--muted);font-size:13px}.shop{display:block;text-align:center;margin-top:14px;background:#202942;border-radius:10px;padding:11px;font-weight:800}
+.premium{display:grid;grid-template-columns:1.2fr .8fr;gap:25px;align-items:center}@media(max-width:800px){.premium{grid-template-columns:1fr}}
+.premium h2{font-size:34px;margin:0 0 12px}.premium p{color:var(--muted);line-height:1.6}.list{color:#dce2f3;line-height:2}.pricebox{background:#0b1120;border:1px solid #303953;border-radius:18px;padding:25px;text-align:center}.pricebox strong{font-size:42px}
+footer{padding:55px 0 30px;color:#606b84;text-align:center;font-size:13px}
+.notice{font-size:12px;color:#69748c;margin-top:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="logo" href="#">PC<span>VALUE</span></a>
+  <div class="navlinks"><a href="#estimate">Estimer</a><a href="#tools">Outils</a><a href="#premium">Premium</a></div>
+</nav>
+
+<section class="hero">
+  <span class="pill">⚡ Estimation instantanée</span>
+  <h1>Combien vaut ton PC ?</h1>
+  <p>Estime gratuitement la valeur de ta configuration, découvre un prix de revente conseillé et prépare ton prochain upgrade.</p>
+  <a class="btn" href="#estimate">Estimer mon PC →</a>
+</section>
+
+<section id="estimate" class="section">
+<div class="title"><h2>Estime ta configuration</h2><p>Choisis tes composants principaux.</p></div>
+<div class="card">
+<div class="grid">
+<div><label>Processeur</label><select id="cpu">
+<option value="0">Choisir…</option><option value="100">Ryzen 5 / Core i5 ancien</option><option value="180">Ryzen 5 / Core i5 récent</option><option value="290">Ryzen 7 / Core i7</option><option value="450">Ryzen 9 / Core i9</option></select></div>
+<div><label>Carte graphique</label><select id="gpu">
+<option value="0">Choisir…</option><option value="120">GTX 1660 / équivalent</option><option value="230">RTX 3060 / RX 6600</option><option value="350">RTX 4060 / RX 7600</option><option value="520">RTX 4070 / RX 7800 XT</option><option value="760">RTX 4080 / équivalent</option></select></div>
+<div><label>RAM</label><select id="ram"><option value="0">Choisir…</option><option value="25">8 Go</option><option value="50">16 Go</option><option value="85">32 Go</option><option value="140">64 Go</option></select></div>
+<div><label>Stockage</label><select id="storage"><option value="0">Choisir…</option><option value="20">500 Go SSD</option><option value="40">1 To SSD</option><option value="70">2 To SSD</option><option value="110">4 To SSD</option></select></div>
+<div class="full"><label>État général</label><select id="condition"><option value="1">Très bon état</option><option value=".9">Bon état</option><option value=".78">État correct</option><option value=".62">Usé</option></select></div>
+<div class="full"><button class="primary" onclick="estimate()">Calculer mon estimation</button></div>
+</div>
+<div id="result" class="result">
+<div class="muted">Prix de revente conseillé</div>
+<div id="price" class="price">0 €</div>
+<div id="range" class="range"></div>
+<div class="actions"><a class="smallbtn" href="#premium">Obtenir l'analyse complète</a><a class="smallbtn" href="#shops">Voir des composants</a></div>
+</div>
+<div class="notice">Estimation indicative : les prix réels varient selon le marché, la marque, l'état et les accessoires.</div>
+</div>
+</section>
+
+<div class="ad">ESPACE PUBLICITAIRE — emplacement prévu pour une régie publicitaire</div>
+
+<section id="tools" class="section">
+<div class="title"><h2>Plus que le prix d'un PC</h2><p>Des outils pour attirer du trafic et créer plusieurs sources de revenus.</p></div>
+<div class="features">
+<div class="feature"><div class="icon">🎮</div><h3>Estimation FPS</h3><p>Choisis ton GPU, ton processeur et ton jeu pour obtenir une estimation des performances.</p></div>
+<div class="feature"><div class="icon">⚖️</div><h3>Comparer deux PC</h3><p>Compare deux configurations et leurs composants en quelques secondes.</p></div>
+<div class="feature"><div class="icon">🛒</div><h3>Prix des composants</h3><p>Consulte les prix et retrouve les offres partenaires depuis chaque fiche produit.</p></div>
+</div>
+</section>
+
+<section id="shops" class="section">
+<div class="title">
+  <h2>🛒 Composants du moment</h2>
+  <p>Produits réels et prix relevés le 23 septembre 2026. Les prix peuvent changer.</p>
+</div>
+
+<div class="products">
+  <div class="product">
+    <div class="tag">CARTE GRAPHIQUE</div>
+    <h3>ASUS GeForce RTX 5060 DUAL 8 Go</h3>
+    <p>RTX 5060 · 8 Go GDDR7 · DLSS 4</p>
+    <strong>≈ 459 €</strong>
+    <a class="shop" href="https://www.megekko.nl/product/1963/1171612/Nvidia-Videokaarten/ASUS-GeForce-RTX-5060-DUAL-RTX5060-O8G-A-Videokaart" target="_blank" rel="noopener">Voir l'offre →</a>
+  </div>
+
+  <div class="product">
+    <div class="tag">PROCESSEUR GAMING</div>
+    <h3>AMD Ryzen 5 7500X3D</h3>
+    <p>6 cœurs · AM5 · jusqu'à 4,5 GHz</p>
+    <strong>≈ 199 €</strong>
+    <a class="shop" href="https://www.megekko.nl/product/8200/298010/Socket-AM5-Processoren/AMD-Ryzen-5-7500X3D-Processor" target="_blank" rel="noopener">Voir l'offre →</a>
+  </div>
+
+  <div class="product">
+    <div class="tag">PROCESSEUR</div>
+    <h3>AMD Ryzen 5 7600X</h3>
+    <p>6 cœurs · AM5 · jusqu'à 5,3 GHz</p>
+    <strong>≈ 169 €</strong>
+    <a class="shop" href="https://www.megekko.nl/Computer/Componenten/Processoren/Socket-AM5-Processoren" target="_blank" rel="noopener">Voir l'offre →</a>
+  </div>
+
+  <div class="product">
+    <div class="tag">CARTE MÈRE</div>
+    <h3>ASUS TUF GAMING B650-PLUS WIFI</h3>
+    <p>AM5 · DDR5 · Wi‑Fi</p>
+    <strong>≈ 149 €</strong>
+    <a class="shop" href="https://www.megekko.nl/product/1946/288898/AMD-Socket-AM5-Moederborden/ASUS-TUF-GAMING-B650-PLUS-WIFI" target="_blank" rel="noopener">Voir l'offre →</a>
+  </div>
+
+  <div class="product">
+    <div class="tag">SSD NVMe</div>
+    <h3>Kingston NV3</h3>
+    <p>SSD NVMe M.2 · PCIe 4.0</p>
+    <strong>≈ 149 €*</strong>
+    <a class="shop" href="https://www.alternate.nl/Kingston/NV3-NVMe-SSD/html/product/100070813" target="_blank" rel="noopener">Voir l'offre →</a>
+  </div>
+
+  <div class="product">
+    <div class="tag">CARTE MÈRE — BUDGET</div>
+    <h3>Gigabyte B650 EAGLE</h3>
+    <p>Socket AM5 · DDR5</p>
+    <strong>≈ 135–140 €</strong>
+    <a class="shop" href="https://www.alternate.nl/GIGABYTE/B650-EAGLE-AX-Moederbord/html/product/100031530" target="_blank" rel="noopener">Voir l'offre →</a>
+  </div>
+</div>
+
+<div class="ad">ESPACE PUBLICITAIRE / AFFILIATION — remplace les liens ci-dessus par tes liens affiliés</div>
+<div class="notice">
+  * Les prix sont des instantanés observés lors de la recherche et ne constituent pas une garantie de prix.
+  Pour gagner une commission, les liens directs doivent être remplacés par les URLs de tracking fournies par ton programme d'affiliation.
+</div>
+</section>
+
+<section id="premium" class="section">
+<div class="card premium">
+<div><h2>Analyse PC complète</h2><p>Transforme l'estimation gratuite en offre premium : prix conseillé, fourchette de vente, composants à upgrader et analyse détaillée.</p><div class="list">✓ Prix de revente conseillé<br>✓ Analyse des composants<br>✓ Conseils d'upgrade<br>✓ Rapport PDF</div></div>
+<div class="pricebox"><div class="muted">Version Premium</div><strong>2,99 €</strong><p>Exemple d'offre — paiement à connecter.</p><button class="primary" onclick="alert('Prochaine étape : connecter Stripe ou un autre système de paiement.')">Acheter l'analyse</button></div>
+</div>
+</section>
+
+<footer>© 2026 PCValue — Prototype.<br><span class="notice">Certains liens peuvent être affiliés : PCValue peut recevoir une commission si un achat est effectué via un lien partenaire, sans coût supplémentaire pour l’acheteur.</span></footer>
+</div>
+<script>
+function estimate(){
+ const ids=['cpu','gpu','ram','storage'];
+ const total=ids.reduce((s,id)=>s+Number(document.getElementById(id).value),0);
+ if(!total){alert('Choisis au moins les composants principaux.');return}
+ const condition=Number(document.getElementById('condition').value);
+ const value=Math.round((total*condition*.82)/10)*10;
+ document.getElementById('price').textContent=value+' €';
+ document.getElementById('range').textContent='Fourchette indicative : '+Math.round(value*.9/10)*10+' à '+Math.round(value*1.1/10)*10+' €';
+ document.getElementById('result').style.display='block';
+ document.getElementById('result').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
